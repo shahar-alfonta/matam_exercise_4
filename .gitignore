@@ -1,0 +1,6 @@
+.idea/*
+cmake-build-debug/*
+dry/.idea/*
+dry/cmake-build-debug/*
+wet/.idea/*
+wet/cmake-build-debug/*
