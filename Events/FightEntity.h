@@ -15,11 +15,18 @@ public:
     virtual int getDamage() const = 0;
 
     virtual void postFightChanges();
+
+    virtual string getEntityType() const = 0;
+
+    string getDescription() const;
 };
 
 
 class MonsterPack : public FightEntity {
-    std::vector<FightEntity *> entities;
+private:
+    std::vector<FightEntity *> entities;  // TODO: probably a dynamically created array
+
+public:
 
     int getCombatPower() const override;
 
@@ -28,6 +35,10 @@ class MonsterPack : public FightEntity {
     int getDamage() const override;
 
     void postFightChanges() override;
+
+    string getEntityType() const override;
+
+    int getMembersAmount() const;
 };
 
 
@@ -42,8 +53,6 @@ public:
     int getLoot() const override;
 
     int getDamage() const override;
-
-    virtual string getMonsterType() = 0;
 };
 
 
@@ -53,7 +62,7 @@ protected:
     int loot = 2;
     int damage = 10;
 public:
-    string getMonsterType() override;
+    string getEntityType() const override;
 };
 
 class Slime : public Monster {
@@ -62,7 +71,7 @@ protected:
     int loot = 5;
     int damage = 25;
 public:
-    string getMonsterType() override;
+    string getEntityType() const override;
 };
 
 class Balrog : public Monster {
@@ -71,7 +80,7 @@ protected:
     int loot = 100;
     int damage = 9001;
 public:
-    string getMonsterType() override;
+    string getEntityType() const override;
 
     void postFightChanges() override;
 };
