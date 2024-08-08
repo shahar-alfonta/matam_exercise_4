@@ -9,6 +9,8 @@
 
 class MatamStory{
 private:
+    Warrior* players[6];
+
     unsigned int m_turnIndex;
 
     /**
@@ -18,7 +20,11 @@ private:
      *
      * @return - void
     */
-    void playTurn(Player& player);
+    void playTurn(Player& player) {
+        Warrior* name;
+        players[0] = name;
+
+    }
 
     /**
      * Plays a single round of the game
