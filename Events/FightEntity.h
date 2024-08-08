@@ -16,7 +16,7 @@ public:
 
     virtual void postFightChanges();
 
-    virtual string getEntityType() const = 0;
+    virtual string getEntityTypeMessage() const = 0;
 
     string getDescription() const;
 };
@@ -24,9 +24,12 @@ public:
 
 class MonsterPack : public FightEntity {
 private:
-    std::vector<FightEntity *> entities;  // TODO: probably a dynamically created array
+    int membersAmount;
+    std::vector<FightEntity *> members;  // TODO: probably a dynamically created array
 
 public:
+    MonsterPack(int membersAmount);  // TODO: maybe just a constructor that accepts the string?
+    void addMember(FightEntity* entity);
 
     int getCombatPower() const override;
 
@@ -36,7 +39,7 @@ public:
 
     void postFightChanges() override;
 
-    string getEntityType() const override;
+    string getEntityTypeMessage() const override;
 
     int getMembersAmount() const;
 };
@@ -62,7 +65,7 @@ protected:
     int loot = 2;
     int damage = 10;
 public:
-    string getEntityType() const override;
+    string getEntityTypeMessage() const override;
 };
 
 class Slime : public Monster {
@@ -71,7 +74,7 @@ protected:
     int loot = 5;
     int damage = 25;
 public:
-    string getEntityType() const override;
+    string getEntityTypeMessage() const override;
 };
 
 class Balrog : public Monster {
@@ -80,7 +83,7 @@ protected:
     int loot = 100;
     int damage = 9001;
 public:
-    string getEntityType() const override;
+    string getEntityTypeMessage() const override;
 
     void postFightChanges() override;
 };

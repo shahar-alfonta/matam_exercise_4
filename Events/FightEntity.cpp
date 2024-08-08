@@ -10,14 +10,14 @@ void FightEntity::postFightChanges() {}
 
 string FightEntity::getDescription() const {
     ostringstream oss;
-    oss << getEntityType() << " (power " << getCombatPower() << ", loot " << getLoot()
+    oss << getEntityTypeMessage() << " (power " << getCombatPower() << ", loot " << getLoot()
         << ", damage " << getDamage() << ")";
     return oss.str();
 }
 
 int MonsterPack::getCombatPower() const {
     int totalPower = 0;
-    for (FightEntity *entity: entities) {
+    for (FightEntity *entity: members) {
         totalPower += entity->getCombatPower();
     }
     return totalPower;
@@ -25,7 +25,7 @@ int MonsterPack::getCombatPower() const {
 
 int MonsterPack::getLoot() const {
     int totalLoot = 0;
-    for (FightEntity *entity: entities) {
+    for (FightEntity *entity: members) {
         totalLoot += entity->getLoot();
     }
     return totalLoot;
@@ -34,26 +34,26 @@ int MonsterPack::getLoot() const {
 
 int MonsterPack::getDamage() const {
     int totalDamage = 0;
-    for (FightEntity *entity: entities) {
+    for (FightEntity *entity: members) {
         totalDamage += entity->getDamage();
     }
     return totalDamage;
 }
 
 void MonsterPack::postFightChanges() {
-    for (FightEntity *entity: entities) {
+    for (FightEntity *entity: members) {
         entity->postFightChanges();
     }
 }
 
-string MonsterPack::getEntityType() const {
+string MonsterPack::getEntityTypeMessage() const {
     ostringstream oss;
-    oss << "Pack of " << getMembersAmount();
+    oss << "Pack of " << getMembersAmount() << "members";
     return oss.str();
 }
 
 int MonsterPack::getMembersAmount() const {
-    return (int) entities.size();  // TODO: probably we will iterate over entities and call .amount() on each
+    return membersAmount;
 }
 
 int Monster::getCombatPower() const {
@@ -68,15 +68,15 @@ int Monster::getDamage() const {
     return damage;
 }
 
-string Snail::getEntityType() const {
+string Snail::getEntityTypeMessage() const {
     return "Snail";
 }
 
-string Slime::getEntityType() const {
+string Slime::getEntityTypeMessage() const {
     return "Slime";
 }
 
-string Balrog::getEntityType() const {
+string Balrog::getEntityTypeMessage() const {
     return "Balrog";
 }
 
