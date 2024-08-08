@@ -3,6 +3,7 @@
 
 #include "vector"
 #include "string"
+#include "memory"
 
 using namespace std;
 
@@ -25,11 +26,10 @@ public:
 class MonsterPack : public FightEntity {
 private:
     int membersAmount;
-    std::vector<FightEntity *> members;  // TODO: probably a dynamically created array
+    unique_ptr<unique_ptr<FightEntity>[]> members;
 
 public:
-    MonsterPack(int membersAmount);  // TODO: maybe just a constructor that accepts the string?
-    void addMember(FightEntity* entity);
+    MonsterPack(int membersAmount);
 
     int getCombatPower() const override;
 

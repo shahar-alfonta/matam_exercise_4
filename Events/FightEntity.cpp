@@ -2,6 +2,7 @@
 #include "FightEntity.h"
 
 #include "sstream"
+#include "memory"
 
 using namespace std;
 
@@ -17,16 +18,16 @@ string FightEntity::getDescription() const {
 
 int MonsterPack::getCombatPower() const {
     int totalPower = 0;
-    for (FightEntity *entity: members) {
-        totalPower += entity->getCombatPower();
+    for (int i = 0; i < membersAmount; i++) {
+        totalPower += members[i]->getCombatPower();
     }
     return totalPower;
 }
 
 int MonsterPack::getLoot() const {
     int totalLoot = 0;
-    for (FightEntity *entity: members) {
-        totalLoot += entity->getLoot();
+    for (int i = 0; i < membersAmount; i++) {
+        totalLoot += members[i]->getLoot();
     }
     return totalLoot;
 }
@@ -34,15 +35,15 @@ int MonsterPack::getLoot() const {
 
 int MonsterPack::getDamage() const {
     int totalDamage = 0;
-    for (FightEntity *entity: members) {
-        totalDamage += entity->getDamage();
+    for (int i = 0; i < membersAmount; i++) {
+        totalDamage += members[i]->getDamage();
     }
     return totalDamage;
 }
 
 void MonsterPack::postFightChanges() {
-    for (FightEntity *entity: members) {
-        entity->postFightChanges();
+    for (int i = 0; i < membersAmount; i++) {
+        members[i]->postFightChanges();
     }
 }
 
@@ -55,6 +56,10 @@ string MonsterPack::getEntityTypeMessage() const {
 int MonsterPack::getMembersAmount() const {
     return membersAmount;
 }
+
+MonsterPack::MonsterPack(int membersAmount) :
+        membersAmount(membersAmount),
+        members(make_unique<unique_ptr<FightEntity>[]>(membersAmount)) {}
 
 int Monster::getCombatPower() const {
     return combatPower;
