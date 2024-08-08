@@ -3,7 +3,10 @@
 
 #include <string>
 
+#include "exception.h"
+
 using std::string;
+
 
 enum Character {
     RESPONSIBLE, RISK_TAKING
@@ -21,6 +24,7 @@ protected:
     unsigned int coins = 10;
 
 public:
+    Player(string name, string characterType);
     /**
      * Gets the description of the player
      *
@@ -58,12 +62,14 @@ public:
     */
     int getHealthPoints() const;
 
-    /**x
+    /**
      * Gets the amount of coins the player has
      *
      * @return - coins of the player
     */
     int getCoins() const;
+
+    void setCoins(int newCoins);
 
     void setForce(int force);
 

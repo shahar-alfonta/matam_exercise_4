@@ -49,6 +49,26 @@ string Player::getCharacter() const {
     }
 }
 
+Player::Player(string name, string characterType){
+    if(name.size() > 15){
+        throw Invalid_File("Invalid Players File");
+    }
+    name = name;
+    if (characterType == "Responsible"){
+        chracter = RESPONSIBLE;
+    } else if(characterType == "RiskTaking"){
+        chracter = RISK_TAKING;
+    }else{
+        throw Invalid_File("Invalid Players File");
+    }
+}
+
+void Player::setCoins(int newCoins) {
+    if (newCoins > 0){
+        coins = newCoins;
+    }
+}
+
 int Warrior::combatPower() const {
     return force*2 + level;
 }
