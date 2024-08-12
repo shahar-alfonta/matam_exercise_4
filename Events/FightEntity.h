@@ -26,7 +26,7 @@ public:
 class MonsterPack : public FightEntity {
 private:
     int membersAmount;
-    unique_ptr<unique_ptr<FightEntity>[]> members;
+    vector<shared_ptr<FightEntity>> members;
 
 public:
     MonsterPack(int membersAmount);

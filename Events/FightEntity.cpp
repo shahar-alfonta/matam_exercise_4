@@ -18,16 +18,16 @@ string FightEntity::getDescription() const {
 
 int MonsterPack::getCombatPower() const {
     int totalPower = 0;
-    for (int i = 0; i < membersAmount; i++) {
-        totalPower += members[i]->getCombatPower();
+    for (const shared_ptr<FightEntity>& member: members) {
+        totalPower += member->getCombatPower();
     }
     return totalPower;
 }
 
 int MonsterPack::getLoot() const {
     int totalLoot = 0;
-    for (int i = 0; i < membersAmount; i++) {
-        totalLoot += members[i]->getLoot();
+    for (const shared_ptr<FightEntity>& member: members) {
+        totalLoot += member->getLoot();
     }
     return totalLoot;
 }
@@ -35,15 +35,15 @@ int MonsterPack::getLoot() const {
 
 int MonsterPack::getDamage() const {
     int totalDamage = 0;
-    for (int i = 0; i < membersAmount; i++) {
-        totalDamage += members[i]->getDamage();
+    for (const shared_ptr<FightEntity>& member: members) {
+        totalDamage += member->getDamage();
     }
     return totalDamage;
 }
 
 void MonsterPack::postFightChanges() {
-    for (int i = 0; i < membersAmount; i++) {
-        members[i]->postFightChanges();
+    for (shared_ptr<FightEntity>& member: members) {
+        member->postFightChanges();
     }
 }
 
@@ -56,10 +56,6 @@ string MonsterPack::getEntityTypeMessage() const {
 int MonsterPack::getMembersAmount() const {
     return membersAmount;
 }
-
-MonsterPack::MonsterPack(int membersAmount) :
-        membersAmount(membersAmount),
-        members(make_unique<unique_ptr<FightEntity>[]>(membersAmount)) {}
 
 int Monster::getCombatPower() const {
     return combatPower;
