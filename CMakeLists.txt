@@ -16,4 +16,6 @@ add_executable(matam_exercise_4
         Utilities.cpp
         Utilities.h
         Players/Player.cpp
-        Players/exception.h)
+        Players/exception.h
+        Events/Event.cpp
+        Events/FightEntity.cpp)
