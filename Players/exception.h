@@ -8,7 +8,7 @@ using std::string;
 class Invalid_File : public std::exception {
     std::string massage;
 public:
-    Invalid_File(string msg):massage(msg){};
+    Invalid_File(string massage):massage(massage){};
     const char* what() const noexcept override {
         return massage.c_str();
     }

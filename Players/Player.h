@@ -77,6 +77,8 @@ public:
 
      virtual int combatPower() const;
 
+     void levelUp();
+
     virtual string getJob() const = 0;
 };
 

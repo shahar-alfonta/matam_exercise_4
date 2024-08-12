@@ -25,6 +25,10 @@ int Player::getHealthPoints() const {
     return currentHP;
 }
 
+void Player::levelUp(){
+    level++;
+}
+
 int Player::getForce() const {
     return force;
 }
@@ -53,7 +57,7 @@ Player::Player(string name, string characterType){
     if(name.size() > 15){
         throw Invalid_File("Invalid Players File");
     }
-    name = name;
+    name = this->name;
     if (characterType == "Responsible"){
         chracter = RESPONSIBLE;
     } else if(characterType == "RiskTaking"){
