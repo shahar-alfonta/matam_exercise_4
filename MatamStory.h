@@ -9,7 +9,9 @@
 
 using namespace std;
 
-class MatamStory{
+std::shared_ptr<Player> playerFactory(std::istringstream &wordStream);
+
+class MatamStory {
 private:
     vector<shared_ptr<Player>> players;
     vector<shared_ptr<Event>> events;
@@ -22,7 +24,7 @@ private:
      *
      * @return - void
     */
-    void playTurn(Player& player, Event& event);
+    void playTurn(Player &player);
 
     /**
      * Plays a single round of the game
@@ -49,7 +51,7 @@ public:
      * @return - MatamStory object with the given events and players
      *
     */
-    MatamStory(std::istream& eventsStream, std::istream& playersStream);
+    MatamStory(std::istream &eventsStream, std::istream &playersStream);
 
     /**
      * Plays the entire game

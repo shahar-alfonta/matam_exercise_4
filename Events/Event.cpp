@@ -78,3 +78,16 @@ void PotionsMerchant::apply(Player &player) {
 void PotionsMerchant::resetAmountPurchased() {
     amountPurchased = 0;
 }
+
+std::shared_ptr<Event> eventFactory(std::istringstream &wordStream) {
+    string word;
+//    std::istringstream wordStream(line);
+    wordStream >> word;
+    if (word == "Snail") {}
+    if (word == "Balrog") {}
+    if (word == "Slime") {}
+    if (word == "SolarEclipse") {}
+    if (word == "PotionsMerchant") {}
+    if (word == "Pack") {}
+    throw Invalid_File("Invalid Events File");
+}

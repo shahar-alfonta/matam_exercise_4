@@ -59,15 +59,4 @@ public:
     void resetAmountPurchased();
 };
 
-std::shared_ptr<Event> eventFactory(string line) {
-    string word;
-    std::istringstream newLine(line);
-    newLine >> word;
-    if (word == "Snail") {}
-    if (word == "Balrog") {}
-    if (word == "Slime") {}
-    if (word == "SolarEclipse") {}
-    if (word == "PotionsMerchant") {}
-    if (word == "Pack") {}
-    throw Invalid_File("Invalid Players File");
-}
+std::shared_ptr<Event> eventFactory(std::istringstream &wordStream);
