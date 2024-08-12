@@ -48,7 +48,7 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
 void MatamStory::playTurn(Player& player, Event& event) {
     printTurnDetails(m_turnIndex,player,event);
     event.apply(player);
-    printTurnOutcome(event.getOutcome());
+    printTurnOutcome(event.getOutCome(player));
     /**
      * Steps to implement (there may be more, depending on your design):
      * 1. Get the next event from the events list
