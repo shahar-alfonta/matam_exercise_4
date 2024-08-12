@@ -23,7 +23,7 @@ public:
 
 class Encounter : public Event {
 private:
-    FightEntity* entity;
+    FightEntity *entity;
 public:
     string getDescription() const override;
 
@@ -59,15 +59,15 @@ public:
     void resetAmountPurchased();
 };
 
-std::shared_ptr<Event> eventFactory (string line){
+std::shared_ptr<Event> eventFactory(string line) {
     string word;
     std::istringstream newLine(line);
     newLine >> word;
-    if(word == "Snail"){}
-    if(word == "Balrog"){}
-    if(word == "Slime"){}
-    if(word == "SolarEclipse"){}
-    if(word == "PotionsMerchant"){}
-    if(word == "Pack"){}
+    if (word == "Snail") {}
+    if (word == "Balrog") {}
+    if (word == "Slime") {}
+    if (word == "SolarEclipse") {}
+    if (word == "PotionsMerchant") {}
+    if (word == "Pack") {}
     throw Invalid_File("Invalid Players File");
 }
