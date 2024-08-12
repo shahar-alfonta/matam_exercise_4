@@ -5,7 +5,7 @@
 #include <memory>
 #include "Players/Player.h"
 #include "Events/Event.h"
-#include "vector"
+#include "algorithm"
 
 using namespace std;
 
