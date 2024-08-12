@@ -4,15 +4,15 @@
 #include <iostream>
 #include <string>
 #include "Utilities.h"
+#include "Event.h"
 
 using namespace std;
 
-std::shared_ptr<Player> playerFactory (string line){
+std::shared_ptr<Player> playerFactory(std::istringstream &wordStream){
     string name, job, character;
-    std::istringstream newLine(line);
-    newLine >> name;
-    newLine >> job;
-    newLine >> character;
+    wordStream >> name;
+    wordStream >> job;
+    wordStream >> character;
     if(job == "Warrior"){
         return make_shared<Warrior>(name,character);
     }
@@ -29,12 +29,14 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
     string line, word;
     while(!eventsStream.eof()){
         getline(eventsStream,line);
-        events.push_back(eventFactory(line));
+        std::istringstream wordStream(line);
+        events.push_back(eventFactory(wordStream));
     }
 
     while(!playersStream.eof()){
         getline(playersStream,line);
-        players.push_back(playerFactory(line));
+        std::istringstream wordStream(line);
+        players.push_back(playerFactory(wordStream));
     }
 
     printStartMessage();
