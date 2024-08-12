@@ -54,7 +54,7 @@ string Player::getCharacter() const {
 }
 
 Player::Player(string name, string characterType){
-    if(name.size() > 15){
+    if(name.size() > 15 || name.size() < 3){
         throw Invalid_File("Invalid Players File");
     }
     name = this->name;
@@ -73,6 +73,8 @@ void Player::setCoins(int newCoins) {
     }
 }
 
+Warrior::Warrior(string name, string characterType) : Player(name, characterType) {}
+
 int Warrior::combatPower() const {
     return force*2 + level;
 }
@@ -81,10 +83,15 @@ string Warrior::getJob() const {
     return "Warrior";
 }
 
+Archer::Archer(string name, string characterType) : Player(name, characterType) {}
+
 
 string Archer::getJob() const{
     return "Archer";
 }
+
+Magician::Magician(string name, string characterType) : Player(name, characterType) {}
+
 
 string Magician::getJob() const {
     return "Magician";

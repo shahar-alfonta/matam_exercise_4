@@ -86,6 +86,7 @@ class Warrior : public Player {
     int maxHP = 150;
 
 public:
+    Warrior(string name, string characterType);
     int combatPower() const override;
 
     string getJob() const override;
@@ -95,11 +96,13 @@ class Archer : public Player {
     int coins = 20;
 
 public:
+    Archer(string name, string characterType);
     string getJob() const override;
 
 };
 
 class Magician : public Player {
 public:
+    Magician(string name, string characterType);
     string getJob() const override;
 };

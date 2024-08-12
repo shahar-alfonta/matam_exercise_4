@@ -2,15 +2,17 @@
 #pragma once
 
 #include <iostream>
-
+#include <memory>
 #include "Players/Player.h"
 #include "Events/Event.h"
+#include "vector"
 
+using namespace std;
 
 class MatamStory{
 private:
-    Warrior* players[6];
-
+    vector<shared_ptr<Player>> players;
+    vector<shared_ptr<Event>> events;
     unsigned int m_turnIndex;
 
     /**
@@ -20,11 +22,7 @@ private:
      *
      * @return - void
     */
-    void playTurn(Player& player) {
-        Warrior* name;
-        players[0] = name;
-
-    }
+    void playTurn(Player& player);
 
     /**
      * Plays a single round of the game
