@@ -6,6 +6,10 @@
 #include <string>
 #include "memory"
 #include "FightEntity.h"
+#include "unordered_map"
+
+#define SOLAR_ECLIPSE "SolarEclipse"
+#define POTIONS_MERCHANT "PotionsMerchant"
 
 class Event {
 public:
@@ -23,8 +27,10 @@ public:
 
 class Encounter : public Event {
 private:
-    FightEntity *entity;
+    shared_ptr<FightEntity> entity;
 public:
+    Encounter(shared_ptr<FightEntity> entity);
+
     string getDescription() const override;
 
     string getOutCome(Player &player) const override;
@@ -36,6 +42,9 @@ public:
 
 
 class SolarEclipse : public Event {
+public:
+    SolarEclipse() = default;
+
     string getDescription() const override;
 
     string getOutCome(Player &player) const override;
@@ -47,9 +56,11 @@ class SolarEclipse : public Event {
 
 class PotionsMerchant : public Event {
 private:
-    int amountPurchased;
+    int amountPurchased = 0;
 
 public:
+    PotionsMerchant() = default;
+
     string getDescription() const override;
 
     string getOutCome(Player &player) const override;
@@ -60,3 +71,12 @@ public:
 };
 
 std::shared_ptr<Event> eventFactory(std::istringstream &wordStream);
+
+std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream);
+
+typedef std::shared_ptr<Event> (*SpecialEventsFactoryFunction)();
+
+unordered_map<string, SpecialEventsFactoryFunction> specialEventsFactoryMap {
+        {SOLAR_ECLIPSE, []() -> shared_ptr<Event> {return make_shared<SolarEclipse>();}},
+        {POTIONS_MERCHANT, []() -> shared_ptr<Event> {return make_shared<PotionsMerchant>();}}
+};

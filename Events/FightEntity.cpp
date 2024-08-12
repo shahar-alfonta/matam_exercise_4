@@ -1,5 +1,6 @@
 
 #include "FightEntity.h"
+#include "Event.h"
 
 #include "sstream"
 #include "memory"
@@ -14,6 +15,18 @@ string FightEntity::getDescription() const {
     oss << getEntityTypeMessage() << " (power " << getCombatPower() << ", loot " << getLoot()
         << ", damage " << getDamage() << ")";
     return oss.str();
+}
+
+MonsterPack::MonsterPack(istringstream &wordStream) {
+    string sizeStr;
+    wordStream >> sizeStr;
+    int size = stoi(sizeStr);
+    int memberCount = 0;
+
+    while (memberCount < size) {
+        members.push_back(fightEntityFactory(wordStream));
+        memberCount++;
+    }
 }
 
 int MonsterPack::getCombatPower() const {
@@ -49,12 +62,8 @@ void MonsterPack::postFightChanges() {
 
 string MonsterPack::getEntityTypeMessage() const {
     ostringstream oss;
-    oss << "Pack of " << getMembersAmount() << "members";
+    oss << "Pack of " << members.size() << "members";
     return oss.str();
-}
-
-int MonsterPack::getMembersAmount() const {
-    return membersAmount;
 }
 
 int Monster::getCombatPower() const {
@@ -69,18 +78,36 @@ int Monster::getDamage() const {
     return damage;
 }
 
+Snail::Snail(istringstream &wordStream) {}
+
 string Snail::getEntityTypeMessage() const {
-    return "Snail";
+    return SNAIL;
 }
+
+Slime::Slime(istringstream &wordStream) {}
 
 string Slime::getEntityTypeMessage() const {
-    return "Slime";
+    return SLIME;
 }
 
+Balrog::Balrog(istringstream &wordStream) {}
+
 string Balrog::getEntityTypeMessage() const {
-    return "Balrog";
+    return BALROG;
 }
 
 void Balrog::postFightChanges() {
     combatPower += 2;
+}
+
+std::shared_ptr<FightEntity> fightEntityFactory(istringstream &wordStream) {
+    string word;
+    wordStream >> word;
+
+    auto it = entitiesFactoryMap.find(word);
+    if (it != entitiesFactoryMap.end()) {
+        return it->second(wordStream);
+    }
+
+    return nullptr;
 }

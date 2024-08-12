@@ -1,6 +1,10 @@
 
 #include "Event.h"
+
+#include <utility>
 #include "../Utilities.h"
+
+Encounter::Encounter(shared_ptr<FightEntity> entity) : entity(entity) {}
 
 string Encounter::getDescription() const {
     return entity->getDescription();
@@ -25,12 +29,12 @@ bool Encounter::playerWins(Player &player) const {
 
 string Encounter::getOutCome(Player &player) const {
     if (playerWins(player)) {
-        return getEncounterWonMessage(player, );
+        return getEncounterWonMessage(player,);
     }
 }
 
 string SolarEclipse::getDescription() const {
-    return "SolarEclipse";
+    return SOLAR_ECLIPSE;
 }
 
 string SolarEclipse::getOutCome(Player &player) const {
@@ -42,16 +46,15 @@ void SolarEclipse::apply(Player &player) {
 }
 
 int SolarEclipse::effect(Player &player) const {
-    if (player.getIsMagic()){
+    if (player.getIsMagic()) {
         return 1;
-    }
-    else {
+    } else {
         return -1;
     }
 }
 
 string PotionsMerchant::getDescription() const {
-    return "PotionsMerchant";
+    return POTIONS_MERCHANT;
 }
 
 string PotionsMerchant::getOutCome(Player &player) const {
@@ -65,8 +68,7 @@ void PotionsMerchant::apply(Player &player) {
         if (player.getHealthPoints() < 50) amountPurchased = 1;
         else amountPurchased = 0;
         player.setHealthPoints(player.getHealthPoints() + amountPurchased);
-    }
-    else if (player.getCharacter() == RESPONSIBLE) {
+    } else if (player.getCharacter() == RESPONSIBLE) {
         while (player.getHealthPoints() <= player.getMaxHealthPoints() && player.getCoins() >= 5) {
             amountPurchased += 1;
             player.setCoins(player.getCoins() - 5);
@@ -81,13 +83,16 @@ void PotionsMerchant::resetAmountPurchased() {
 
 std::shared_ptr<Event> eventFactory(std::istringstream &wordStream) {
     string word;
-//    std::istringstream wordStream(line);
     wordStream >> word;
-    if (word == "Snail") {}
-    if (word == "Balrog") {}
-    if (word == "Slime") {}
-    if (word == "SolarEclipse") {}
-    if (word == "PotionsMerchant") {}
-    if (word == "Pack") {}
+
+    auto it = specialEventsFactoryMap.find(word);
+    if (it != specialEventsFactoryMap.end()) {
+        return it->second();
+    }
+
+    if (shared_ptr<FightEntity> entity = fightEntityFactory(wordStream)){
+        return make_shared<Encounter>(entity);
+    }
+
     throw Invalid_File("Invalid Events File");
 }
