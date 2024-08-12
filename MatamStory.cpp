@@ -8,6 +8,23 @@
 
 using namespace std;
 
+bool comp (shared_ptr<Player>& player1 , shared_ptr<Player>& player2){
+    if (player1->getLevel() > player2->getLevel()){
+        return true;
+    }
+    else if (player1->getLevel() == player2->getLevel()){
+        if(player1->getCoins() > player2->getCoins()){
+            return true;
+        }
+        else if (player1->getCoins() == player2->getCoins()){
+            if(player1->getName() > player2->getName()){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 std::shared_ptr<Player> playerFactory(std::istringstream &wordStream){
     string name, job, character;
     wordStream >> name;
@@ -38,12 +55,6 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
         std::istringstream wordStream(line);
         players.push_back(playerFactory(wordStream));
     }
-
-    printStartMessage();
-    for (int i = 0; i < players.size(); ++i) {
-        printStartPlayerEntry(i,*players[i]);
-    }
-    printBarrier();
     this->m_turnIndex = 1;
 }
 
@@ -51,14 +62,6 @@ void MatamStory::playTurn(Player& player, Event& event) {
     printTurnDetails(m_turnIndex,player,event);
     event.apply(player);
     printTurnOutcome(event.getOutCome(player));
-    /**
-     * Steps to implement (there may be more, depending on your design):
-     * 1. Get the next event from the events list
-     * 2. Print the turn details with "printTurnDetails"
-     * 3. Play the event
-     * 4. Print the turn outcome with "printTurnOutcome"
-    */
-
     m_turnIndex++;
 }
 
@@ -67,29 +70,34 @@ void MatamStory::playRound() {
     printRoundStart();
 
     for (const shared_ptr<Player>& player :players) {
-        playTurn(*player,*events[eventIndex()]);
+        if(player->getHealthPoints() != 0){
+            playTurn(*player,*events[eventIndex()]);
+        }
     }
 
     printRoundEnd();
 
     printLeaderBoardMessage();
 
-
-    /*===== TODO: Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
-
-    /*=======================================================================================*/
+    vector<shared_ptr<Player>> leaderboard = players;
+    sort(leaderboard.begin(),leaderboard.end(),comp);
+    for (int i = 0; i < leaderboard.size(); ++i) {
+        printLeaderBoardEntry(i,*leaderboard[i]);
+    }
 
     printBarrier();
 }
 
 bool MatamStory::isGameOver() const {
-    bool gameOver = true;
     for (const shared_ptr<Player>& player :players) {
-        if(player->getLevel() != 10 || player->getHealthPoints() != 0){
-            gameOver = false;
+        if (player->getLevel() == 10){
+            return true;
+        }
+        if(player->getHealthPoints() != 0){
+            return false;
         }
     }
-    return gameOver;
+    return false;
 }
 
 int MatamStory::eventIndex() {
@@ -98,9 +106,9 @@ int MatamStory::eventIndex() {
 
 void MatamStory::play() {
     printStartMessage();
-    /*===== TODO: Print start message entry for each player using "printStartPlayerEntry" =====*/
-
-    /*=========================================================================================*/
+    for (int i = 0; i < players.size(); ++i) {
+        printStartPlayerEntry(i,*players[i]);
+    }
     printBarrier();
 
     while (!isGameOver()) {
@@ -108,8 +116,13 @@ void MatamStory::play() {
     }
 
     printGameOver();
-    /*===== TODO: Print either a "winner" message or "no winner" message =====*/
-
-    /*========================================================================*/
+    vector<shared_ptr<Player>> leaderboard;
+    sort(leaderboard.begin(),leaderboard.end(),comp);
+    if(leaderboard.front()->getLevel() == 10){
+        printWinner(*leaderboard.front());
+    }
+    else{
+        printNoWinners();
+    }
 }
 

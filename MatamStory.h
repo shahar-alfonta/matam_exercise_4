@@ -5,7 +5,7 @@
 #include <memory>
 #include "Players/Player.h"
 #include "Events/Event.h"
-#include "vector"
+#include "algorithm"
 
 using namespace std;
 
@@ -24,7 +24,7 @@ private:
      *
      * @return - void
     */
-    void playTurn(Player &player);
+    void playTurn(Player &player,Event& event);
 
     /**
      * Plays a single round of the game
@@ -59,4 +59,6 @@ public:
      * @return - void
     */
     void play();
+
+    void playTurn(Player &player, Event &event);
 };
