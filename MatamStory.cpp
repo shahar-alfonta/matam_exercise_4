@@ -8,6 +8,23 @@
 
 using namespace std;
 
+bool comp (shared_ptr<Player>& player1 , shared_ptr<Player>& player2){
+    if (player1->getLevel() > player2->getLevel()){
+        return true;
+    }
+    else if (player1->getLevel() == player2->getLevel()){
+        if(player1->getCoins() > player2->getCoins()){
+            return true;
+        }
+        else if (player1->getCoins() == player2->getCoins()){
+            if(player1->getName() > player2->getName()){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 std::shared_ptr<Player> playerFactory(std::istringstream &wordStream){
     string name, job, character;
     wordStream >> name;
@@ -63,10 +80,10 @@ void MatamStory::playRound() {
     printLeaderBoardMessage();
 
     vector<shared_ptr<Player>> leaderboard = players;
-    sort(leaderboard.begin(),leaderboard.end());
-    /*===== TODO: Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
-
-    /*=======================================================================================*/
+    sort(leaderboard.begin(),leaderboard.end(),comp);
+    for (int i = 0; i < leaderboard.size(); ++i) {
+        printLeaderBoardEntry(i,*leaderboard[i]);
+    }
 
     printBarrier();
 }
@@ -100,6 +117,7 @@ void MatamStory::play() {
 
     printGameOver();
     vector<shared_ptr<Player>> leaderboard;
+    sort(leaderboard.begin(),leaderboard.end(),comp);
     if(leaderboard.front()->getLevel() == 10){
         printWinner(*leaderboard.front());
     }
