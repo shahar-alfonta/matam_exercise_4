@@ -1,83 +1,98 @@
 
 #include "Player.h"
 
-int Player::combatPower() const{
-    return level + force;
-}
-
-int Player::getCoins() const {
-    return coins;
-}
-
-void Player::setHp(int hp) {
-    if(hp < maxHP && hp > 0){
-        currentHP = hp;
+Player::Player(string name, string characterType) : name(name) {
+    if (name.size() > 15 || name.size() < 3) {
+        throw Invalid_File("Invalid Players File");
+    }
+    if (characterType == "Responsible") {
+        character = RESPONSIBLE;
+    } else if (characterType == "RiskTaking") {
+        character = RISK_TAKING;
+    } else {
+        throw Invalid_File("Invalid Players File");
     }
 }
 
-void Player::setForce(int newForce) {
-    if (newForce >= 0){
-        force = newForce;
+string Player::getDescription() const {
+    string characterStr;
+    switch (getCharacter()) {
+        case RESPONSIBLE:
+            characterStr = "Responsible";
+        case RISK_TAKING:
+            characterStr = "RiskTaking";
     }
-}
 
-int Player::getHealthPoints() const {
-    return currentHP;
-}
-
-void Player::levelUp(){
-    level++;
-}
-
-int Player::getForce() const {
-    return force;
-}
-
-int Player::getLevel() const {
-    return level;
+    string description =
+            name + ", " + this->getJob() + " with " + characterStr + " character " + "(level " +
+            std::to_string(level) + ", force " + std::to_string(force) + ")";
 }
 
 string Player::getName() const {
     return name;
 }
 
-string Player::getDescription() const {
-
-    string description = name + "," + this->getJob() + "with" + this->getCharacter() + "character" + "(level" + std::to_string(level) + ", force" + std::to_string(force) + ")";
+Character Player::getCharacter() const {
+    return character;
 }
 
-string Player::getCharacter() const {
-    switch (chracter) {
-        case RESPONSIBLE: return "Responsible";
-        case RISK_TAKING: return "RiskTaking";
+FightRange Player::getFightRange() const {
+    return fightRange;
+}
+
+bool Player::getIsMagic() const {
+    return isMagic;
+}
+
+int Player::getLevel() const {
+    return level;
+}
+
+int Player::getForce() const {
+    return force;
+}
+
+int Player::combatPower() const {
+    return level + force;
+}
+
+int Player::getHealthPoints() const {
+    return currentHP;
+}
+
+unsigned int Player::getCoins() const {
+    return coins;
+}
+
+unsigned int Player::getMaxHealthPoints() const {
+    return maxHP;
+}
+
+void Player::setCoins(unsigned int newCoins) {
+    coins = newCoins;
+}
+
+void Player::setHealthPoints(int hp) {
+    if (hp < maxHP && hp > 0) {
+        currentHP = hp;
     }
 }
 
-Player::Player(string name, string characterType){
-    if(name.size() > 15 || name.size() < 3){
-        throw Invalid_File("Invalid Players File");
-    }
-    name = this->name;
-    if (characterType == "Responsible"){
-        chracter = RESPONSIBLE;
-    } else if(characterType == "RiskTaking"){
-        chracter = RISK_TAKING;
-    }else{
-        throw Invalid_File("Invalid Players File");
+void Player::setForce(int newForce) {
+    if (newForce >= 0) {
+        force = newForce;
     }
 }
 
-void Player::setCoins(int newCoins) {
-    if (newCoins > 0){
-        coins = newCoins;
-    }
+int Warrior::combatPower() const {
+    return force * 2 + level;
+}
+
+void Player::levelUp() {
+    level++;
 }
 
 Warrior::Warrior(string name, string characterType) : Player(name, characterType) {}
-
-int Warrior::combatPower() const {
-    return force*2 + level;
-}
 
 string Warrior::getJob() const {
     return "Warrior";
@@ -85,8 +100,7 @@ string Warrior::getJob() const {
 
 Archer::Archer(string name, string characterType) : Player(name, characterType) {}
 
-
-string Archer::getJob() const{
+string Archer::getJob() const {
     return "Archer";
 }
 
