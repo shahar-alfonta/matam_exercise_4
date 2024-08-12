@@ -1,10 +1,41 @@
 
 #include "MatamStory.h"
-
+#include <fstream>
+#include <iostream>
+#include <string>
 #include "Utilities.h"
 
-MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) {
+using namespace std;
 
+std::shared_ptr<Player> playerFactory (string line){
+    string name, job, character;
+    std::istringstream newLine(line);
+    newLine >> name;
+    newLine >> job;
+    newLine >> character;
+    if(job == "Warrior"){
+        return make_shared<Warrior>(name,character);
+    }
+    if(job == "Magician"){
+        return make_shared<Magician>(name,character);
+    }
+    if(job == "Archer"){
+        return make_shared<Archer>(name,character);
+    }
+    throw Invalid_File("Invalid Players File");
+}
+
+MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) {
+    string line, word;
+    while(!eventsStream.eof()){
+        getline(eventsStream,line);
+        events.push_back(eventFactory(line));
+    }
+
+    while(!playersStream.eof()){
+        getline(playersStream,line);
+        players.push_back(playerFactory(line));
+    }
     /*===== TODO: Open and read events file =====*/
 
     /*==========================================*/
