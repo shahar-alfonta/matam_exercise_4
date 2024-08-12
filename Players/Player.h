@@ -79,13 +79,13 @@ public:
     */
     unsigned int getCoins() const;
 
-    void setCoins(unsigned int newCoins);
+    unsigned int getMaxHealthPoints() const;
 
-    void setForce(int force);
+    void setCoins(unsigned int newCoins);
 
     void setHealthPoints(int hp);
 
-    unsigned int getMaxHealthPoints() const;
+    void setForce(int force);
 
     virtual int combatPower() const;
 
