@@ -59,6 +59,4 @@ public:
      * @return - void
     */
     void play();
-
-    void playTurn(Player &player, Event &event);
 };
