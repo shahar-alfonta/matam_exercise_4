@@ -12,11 +12,16 @@ enum Character {
     RESPONSIBLE, RISK_TAKING
 };
 
-class Player {
-    string name;
-    Character chracter;
+enum FightRange {
+    CLOSE, FAR
+};
 
+class Player {
 protected:
+    string name;
+    Character character;
+    FightRange fightRange;
+    bool isMagic;
     unsigned int level = 1;
     unsigned int force = 5;
     unsigned int currentHP = 100;
@@ -25,6 +30,7 @@ protected:
 
 public:
     Player(string name, string characterType);
+
     /**
      * Gets the description of the player
      *
@@ -39,7 +45,11 @@ public:
     */
     string getName() const;
 
-    string getCharacter() const;
+    Character getCharacter() const;
+
+    FightRange getFightRange() const;
+
+    bool getIsMagic() const;
 
     /**
      * Gets the current level of the player
@@ -67,17 +77,19 @@ public:
      *
      * @return - coins of the player
     */
-    int getCoins() const;
+    unsigned int getCoins() const;
 
-    void setCoins(int newCoins);
+    void setCoins(unsigned int newCoins);
 
     void setForce(int force);
 
-    void setHp(int hp);
+    void setHealthPoints(int hp);
 
-     virtual int combatPower() const;
+    unsigned int getMaxHealthPoints() const;
 
-     void levelUp();
+    virtual int combatPower() const;
+
+    void levelUp();
 
     virtual string getJob() const = 0;
 };
