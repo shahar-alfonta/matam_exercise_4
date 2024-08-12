@@ -36,21 +36,19 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
         getline(playersStream,line);
         players.push_back(playerFactory(line));
     }
-    /*===== TODO: Open and read events file =====*/
 
-    /*==========================================*/
-
-
-    /*===== TODO: Open and Read players file =====*/
-
-    /*============================================*/
-
-
+    printStartMessage();
+    for (int i = 0; i < players.size(); ++i) {
+        printStartPlayerEntry(i,*players[i]);
+    }
+    printBarrier();
     this->m_turnIndex = 1;
 }
 
-void MatamStory::playTurn(Player& player) {
-
+void MatamStory::playTurn(Player& player, Event& event) {
+    printTurnDetails(m_turnIndex,player,event);
+    event.apply(player);
+    printTurnOutcome(event.getOutcome());
     /**
      * Steps to implement (there may be more, depending on your design):
      * 1. Get the next event from the events list
@@ -66,13 +64,14 @@ void MatamStory::playRound() {
 
     printRoundStart();
 
-    /*===== TODO: Play a turn for each player =====*/
-
-    /*=============================================*/
+    for (const shared_ptr<Player>& player :players) {
+        playTurn(*player,*events[eventIndex()]);
+    }
 
     printRoundEnd();
 
     printLeaderBoardMessage();
+
 
     /*===== TODO: Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
 
@@ -82,9 +81,17 @@ void MatamStory::playRound() {
 }
 
 bool MatamStory::isGameOver() const {
-    /*===== TODO: Implement the game over condition =====*/
-    return false; // Replace this line
-    /*===================================================*/
+    bool gameOver = true;
+    for (const shared_ptr<Player>& player :players) {
+        if(player->getLevel() != 10 || player->getHealthPoints() != 0){
+            gameOver = false;
+        }
+    }
+    return gameOver;
+}
+
+int MatamStory::eventIndex() {
+    return m_turnIndex % events.size();
 }
 
 void MatamStory::play() {
@@ -103,3 +110,4 @@ void MatamStory::play() {
 
     /*========================================================================*/
 }
+

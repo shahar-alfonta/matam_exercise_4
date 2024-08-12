@@ -22,7 +22,7 @@ private:
      *
      * @return - void
     */
-    void playTurn(Player& player);
+    void playTurn(Player& player, Event& event);
 
     /**
      * Plays a single round of the game
@@ -38,6 +38,7 @@ private:
     */
     bool isGameOver() const;
 
+    int eventIndex();
 public:
     /**
      * Constructor of MatamStory class
