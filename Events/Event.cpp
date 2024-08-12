@@ -3,6 +3,8 @@
 
 #include "../Utilities.h"
 
+using namespace std;
+
 Encounter::Encounter(shared_ptr<FightEntity> entity) : entity(entity) {}
 
 string Encounter::getDescription() const {
@@ -23,7 +25,7 @@ void Encounter::apply(Player &player) {
 }
 
 bool Encounter::playerWins(Player &player) const {
-    return player.combatPower() > entity->getCombatPower();
+    return (int) player.combatPower() > entity->getCombatPower();
 }
 
 string Encounter::getOutCome(Player &player) const {
@@ -91,9 +93,14 @@ std::shared_ptr<Event> eventFactory(std::istringstream &wordStream) {
         return it->second();
     }
 
-    if (shared_ptr<FightEntity> entity = fightEntityFactory(wordStream)){
+    if (shared_ptr<FightEntity> entity = fightEntityFactory(wordStream)) {
         return make_shared<Encounter>(entity);
     }
 
     throw Invalid_File("Invalid Events File");
 }
+
+std::unordered_map<string, SpecialEventsFactoryFunction> specialEventsFactoryMap{
+        {SOLAR_ECLIPSE,    []() -> std::shared_ptr<Event> { return std::make_shared<SolarEclipse>(); }},
+        {POTIONS_MERCHANT, []() -> std::shared_ptr<Event> { return std::make_shared<PotionsMerchant>(); }}
+};

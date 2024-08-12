@@ -1,6 +1,8 @@
 #ifndef HW4_FIGHTENTITY_H
 #define HW4_FIGHTENTITY_H
 
+#pragma once
+
 #include "unordered_map"
 #include "vector"
 #include "string"
@@ -10,8 +12,6 @@
 #define SLIME "Slime"
 #define BALROG "Balrog"
 #define PACK "Pack"
-
-using namespace std;
 
 class FightEntity {
 public:
@@ -23,18 +23,18 @@ public:
 
     virtual void postFightChanges();
 
-    virtual string getEntityTypeMessage() const = 0;
+    virtual std::string getEntityTypeMessage() const = 0;
 
-    string getDescription() const;
+    std::string getDescription() const;
 };
 
 
 class MonsterPack : public FightEntity {
 private:
-    vector<shared_ptr<FightEntity>> members;
+    std::vector<std::shared_ptr<FightEntity>> members;
 
 public:
-    MonsterPack(istringstream &wordStream);
+    MonsterPack(std::istringstream &wordStream);
 
     int getCombatPower() const override;
 
@@ -44,7 +44,7 @@ public:
 
     void postFightChanges() override;
 
-    string getEntityTypeMessage() const override;
+    std::string getEntityTypeMessage() const override;
 };
 
 
@@ -68,9 +68,9 @@ protected:
     int loot = 2;
     int damage = 10;
 public:
-    Snail(istringstream &wordStream);
+    Snail(std::istringstream &wordStream);
 
-    string getEntityTypeMessage() const override;
+    std::string getEntityTypeMessage() const override;
 };
 
 class Slime : public Monster {
@@ -79,9 +79,9 @@ protected:
     int loot = 5;
     int damage = 25;
 public:
-    Slime(istringstream &wordStream);
+    Slime(std::istringstream &wordStream);
 
-    string getEntityTypeMessage() const override;
+    std::string getEntityTypeMessage() const override;
 };
 
 class Balrog : public Monster {
@@ -90,30 +90,17 @@ protected:
     int loot = 100;
     int damage = 9001;
 public:
-    Balrog(istringstream &wordStream);
+    Balrog(std::istringstream &wordStream);
 
-    string getEntityTypeMessage() const override;
+    std::string getEntityTypeMessage() const override;
 
     void postFightChanges() override;
 };
 
-typedef std::shared_ptr<FightEntity> (*EntitiesFactoryFunction)(istringstream &);
+typedef std::shared_ptr<FightEntity> (*EntitiesFactoryFunction)(std::istringstream &);
 
-unordered_map<string, EntitiesFactoryFunction> entitiesFactoryMap{
-        {SNAIL,  [](istringstream &wordStream) -> shared_ptr<FightEntity> {
-            return make_shared<Snail>(wordStream);
-        }},
-        {SLIME,  [](istringstream &wordStream) -> shared_ptr<FightEntity> {
-            return make_shared<Slime>(wordStream);
-        }},
-        {BALROG, [](istringstream &wordStream) -> shared_ptr<FightEntity> {
-            return make_shared<Balrog>(wordStream);
-        }},
-        {PACK,   [](istringstream &wordStream) -> shared_ptr<FightEntity> {
-            return make_shared<MonsterPack>(wordStream);
-        }}
-};
+extern std::unordered_map<std::string, EntitiesFactoryFunction> entitiesFactoryMap;
 
-std::shared_ptr<FightEntity> fightEntityFactory(istringstream &wordStream);
+std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream);
 
 #endif //HW4_FIGHTENTITY_H

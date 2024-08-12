@@ -27,9 +27,9 @@ public:
 
 class Encounter : public Event {
 private:
-    shared_ptr<FightEntity> entity;
+    std::shared_ptr<FightEntity> entity;
 public:
-    Encounter(shared_ptr<FightEntity> entity);
+    Encounter(std::shared_ptr<FightEntity> entity);
 
     string getDescription() const override;
 
@@ -76,7 +76,4 @@ std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream);
 
 typedef std::shared_ptr<Event> (*SpecialEventsFactoryFunction)();
 
-unordered_map<string, SpecialEventsFactoryFunction> specialEventsFactoryMap {
-        {SOLAR_ECLIPSE, []() -> shared_ptr<Event> {return make_shared<SolarEclipse>();}},
-        {POTIONS_MERCHANT, []() -> shared_ptr<Event> {return make_shared<PotionsMerchant>();}}
-};
+extern std::unordered_map<string, SpecialEventsFactoryFunction> specialEventsFactoryMap;

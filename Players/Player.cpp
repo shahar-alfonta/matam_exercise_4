@@ -26,6 +26,8 @@ string Player::getDescription() const {
     string description =
             name + ", " + this->getJob() + " with " + characterStr + " character " + "(level " +
             std::to_string(level) + ", force " + std::to_string(force) + ")";
+
+    return description;
 }
 
 string Player::getName() const {
@@ -73,7 +75,7 @@ void Player::setCoins(unsigned int newCoins) {
 }
 
 void Player::setHealthPoints(int hp) {
-    if (hp < maxHP && hp > 0) {
+    if (hp < (int) maxHP && hp > 0) {
         currentHP = hp;
     }
 }

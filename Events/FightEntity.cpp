@@ -31,7 +31,7 @@ MonsterPack::MonsterPack(istringstream &wordStream) {
 
 int MonsterPack::getCombatPower() const {
     int totalPower = 0;
-    for (const shared_ptr<FightEntity>& member: members) {
+    for (const shared_ptr<FightEntity> &member: members) {
         totalPower += member->getCombatPower();
     }
     return totalPower;
@@ -39,7 +39,7 @@ int MonsterPack::getCombatPower() const {
 
 int MonsterPack::getLoot() const {
     int totalLoot = 0;
-    for (const shared_ptr<FightEntity>& member: members) {
+    for (const shared_ptr<FightEntity> &member: members) {
         totalLoot += member->getLoot();
     }
     return totalLoot;
@@ -48,14 +48,14 @@ int MonsterPack::getLoot() const {
 
 int MonsterPack::getDamage() const {
     int totalDamage = 0;
-    for (const shared_ptr<FightEntity>& member: members) {
+    for (const shared_ptr<FightEntity> &member: members) {
         totalDamage += member->getDamage();
     }
     return totalDamage;
 }
 
 void MonsterPack::postFightChanges() {
-    for (shared_ptr<FightEntity>& member: members) {
+    for (shared_ptr<FightEntity> &member: members) {
         member->postFightChanges();
     }
 }
@@ -111,3 +111,18 @@ std::shared_ptr<FightEntity> fightEntityFactory(istringstream &wordStream) {
 
     return nullptr;
 }
+
+std::unordered_map<std::string, EntitiesFactoryFunction> entitiesFactoryMap{
+        {SNAIL,  [](std::istringstream &wordStream) -> std::shared_ptr<FightEntity> {
+            return std::make_shared<Snail>(wordStream);
+        }},
+        {SLIME,  [](std::istringstream &wordStream) -> std::shared_ptr<FightEntity> {
+            return std::make_shared<Slime>(wordStream);
+        }},
+        {BALROG, [](std::istringstream &wordStream) -> std::shared_ptr<FightEntity> {
+            return std::make_shared<Balrog>(wordStream);
+        }},
+        {PACK,   [](std::istringstream &wordStream) -> std::shared_ptr<FightEntity> {
+            return std::make_shared<MonsterPack>(wordStream);
+        }}
+};
