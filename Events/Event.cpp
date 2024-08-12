@@ -1,7 +1,6 @@
 
 #include "Event.h"
 
-#include <utility>
 #include "../Utilities.h"
 
 Encounter::Encounter(shared_ptr<FightEntity> entity) : entity(entity) {}
@@ -29,7 +28,9 @@ bool Encounter::playerWins(Player &player) const {
 
 string Encounter::getOutCome(Player &player) const {
     if (playerWins(player)) {
-        return getEncounterWonMessage(player,);
+        return getEncounterWonMessage(player, entity->getLoot());
+    } else {
+        return getEncounterLostMessage(player, entity->getDamage());
     }
 }
 
