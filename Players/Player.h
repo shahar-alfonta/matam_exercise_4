@@ -56,21 +56,21 @@ public:
      *
      * @return - level of the player
     */
-    int getLevel() const;
+    unsigned int getLevel() const;
 
     /**
      * Gets the of force the player has
      *
      * @return - force points of the player
     */
-    int getForce() const;
+    unsigned int getForce() const;
 
     /**
      * Gets the amount of health points the player currently has
      *
      * @return - health points of the player
     */
-    int getHealthPoints() const;
+    unsigned int getHealthPoints() const;
 
     /**
      * Gets the amount of coins the player has
@@ -87,7 +87,7 @@ public:
 
     void setForce(int force);
 
-    virtual int combatPower() const;
+    virtual unsigned int combatPower() const;
 
     void levelUp();
 
@@ -99,7 +99,8 @@ class Warrior : public Player {
 
 public:
     Warrior(string name, string characterType);
-    int combatPower() const override;
+
+    unsigned int combatPower() const override;
 
     string getJob() const override;
 };
@@ -109,6 +110,7 @@ class Archer : public Player {
 
 public:
     Archer(string name, string characterType);
+
     string getJob() const override;
 
 };
@@ -116,5 +118,6 @@ public:
 class Magician : public Player {
 public:
     Magician(string name, string characterType);
+
     string getJob() const override;
 };

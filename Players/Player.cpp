@@ -44,19 +44,19 @@ bool Player::getIsMagic() const {
     return isMagic;
 }
 
-int Player::getLevel() const {
+unsigned int Player::getLevel() const {
     return level;
 }
 
-int Player::getForce() const {
+unsigned int Player::getForce() const {
     return force;
 }
 
-int Player::combatPower() const {
+unsigned int Player::combatPower() const {
     return level + force;
 }
 
-int Player::getHealthPoints() const {
+unsigned int Player::getHealthPoints() const {
     return currentHP;
 }
 
@@ -84,7 +84,7 @@ void Player::setForce(int newForce) {
     }
 }
 
-int Warrior::combatPower() const {
+unsigned int Warrior::combatPower() const {
     return force * 2 + level;
 }
 

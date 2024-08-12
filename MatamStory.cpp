@@ -1,6 +1,5 @@
 
 #include "MatamStory.h"
-#include <fstream>
 #include <iostream>
 #include <string>
 #include "Utilities.h"
