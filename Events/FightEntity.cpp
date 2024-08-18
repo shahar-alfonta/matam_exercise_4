@@ -80,19 +80,31 @@ int Monster::getDamage() const {
     return damage;
 }
 
-Snail::Snail(istringstream &wordStream) {}
+Snail::Snail(istringstream &wordStream) {
+    combatPower = 5;
+    loot = 2;
+    damage= 10;
+}
 
 string Snail::getEntityTypeMessage() const {
     return SNAIL;
 }
 
-Slime::Slime(istringstream &wordStream) {}
+Slime::Slime(istringstream &wordStream) {
+     combatPower = 12;
+     loot = 5;
+     damage = 25;
+}
 
 string Slime::getEntityTypeMessage() const {
     return SLIME;
 }
 
-Balrog::Balrog(istringstream &wordStream) {}
+Balrog::Balrog(istringstream &wordStream) {
+     combatPower = 15;
+     loot = 100;
+     damage = 9001;
+}
 
 string Balrog::getEntityTypeMessage() const {
     return BALROG;
