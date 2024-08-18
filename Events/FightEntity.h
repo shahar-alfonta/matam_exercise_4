@@ -97,10 +97,11 @@ public:
     void postFightChanges() override;
 };
 
+std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream, std::string &firstWord);
+
 typedef std::shared_ptr<FightEntity> (*EntitiesFactoryFunction)(std::istringstream &);
 
 extern std::unordered_map<std::string, EntitiesFactoryFunction> entitiesFactoryMap;
 
-std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream);
 
 #endif //HW4_FIGHTENTITY_H

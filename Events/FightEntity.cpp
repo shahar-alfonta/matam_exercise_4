@@ -1,7 +1,7 @@
 
 #include "FightEntity.h"
 #include "Event.h"
-
+#include "iostream"
 #include "sstream"
 #include "memory"
 
@@ -24,7 +24,9 @@ MonsterPack::MonsterPack(istringstream &wordStream) {
     int memberCount = 0;
 
     while (memberCount < size) {
-        members.push_back(fightEntityFactory(wordStream));
+        string firstWord;
+        wordStream >> firstWord;
+        members.push_back(fightEntityFactory(wordStream, firstWord));
         memberCount++;
     }
 }
@@ -100,11 +102,9 @@ void Balrog::postFightChanges() {
     combatPower += 2;
 }
 
-std::shared_ptr<FightEntity> fightEntityFactory(istringstream &wordStream) {
-    string word;
-    wordStream >> word;
+std::shared_ptr<FightEntity> fightEntityFactory(istringstream &wordStream, string &firstWord) {
 
-    auto it = entitiesFactoryMap.find(word);
+    auto it = entitiesFactoryMap.find(firstWord);
     if (it != entitiesFactoryMap.end()) {
         return it->second(wordStream);
     }

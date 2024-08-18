@@ -44,7 +44,8 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream) 
     while (!eventsStream.eof()) {
         getline(eventsStream, line);
         std::istringstream wordStream(line);
-        events.push_back(eventFactory(wordStream));
+        shared_ptr<Event> a = eventFactory(wordStream);
+        events.push_back(a);
     }
 
     while (!playersStream.eof()) {
