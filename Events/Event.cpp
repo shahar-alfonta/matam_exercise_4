@@ -1,7 +1,8 @@
 
 #include "Event.h"
-#include <iostream>
 #include "../Utilities.h"
+
+#define CLOSE_RANGE_DEFAULT_DAMAGE 10
 
 using namespace std;
 
@@ -16,10 +17,10 @@ void Encounter::apply(Player &player) {
         player.levelUp();
         player.setCoins(player.getCoins() + entity->getLoot());
         if (player.getFightRange() == CLOSE) {
-            player.setHealthPoints(player.getHealthPoints() - 10);
+            player.setHealthPoints((int) player.getHealthPoints() - CLOSE_RANGE_DEFAULT_DAMAGE);
         }
     } else {
-        player.setHealthPoints(player.getHealthPoints() - entity->getDamage());
+        player.setHealthPoints((int) player.getHealthPoints() - entity->getDamage());
     }
     entity->postFightChanges();
 }
@@ -45,11 +46,11 @@ string SolarEclipse::getOutCome(Player &player) const {
 }
 
 void SolarEclipse::apply(Player &player) {
-    player.setHealthPoints(player.getHealthPoints() + effect(player));
+    player.setForce((int) player.getForce() + effect(player));
 }
 
 int SolarEclipse::effect(Player &player) const {
-    if (player.getIsMagic()) {
+    if (player.isMagic()) {
         return 1;
     } else {
         return -1;
@@ -66,18 +67,25 @@ string PotionsMerchant::getOutCome(Player &player) const {
 
 void PotionsMerchant::apply(Player &player) {
     resetAmountPurchased();
-
-    if (player.getCharacter() == RISK_TAKING) {
-        if (player.getHealthPoints() < 50) amountPurchased = 1;
-        else amountPurchased = 0;
-        player.setHealthPoints(player.getHealthPoints() + amountPurchased);
-    } else if (player.getCharacter() == RESPONSIBLE) {
-        while (player.getHealthPoints() <= player.getMaxHealthPoints() && player.getCoins() >= 5) {
-            amountPurchased += 1;
-            player.setCoins(player.getCoins() - 5);
-            player.setHealthPoints(player.getHealthPoints() + 1);
-        }
+    switch (player.getCharacter()) {
+        case RISK_TAKING:
+            if (player.getHealthPoints() < 50 && player.getCoins() >= HEALTH_POTIONS_PRICE) {
+                buyPotion(player);
+            }
+            break;
+        case RESPONSIBLE:
+            while (player.getHealthPoints() <= player.getMaxHealthPoints() &&
+                   player.getCoins() >= HEALTH_POTIONS_PRICE) {
+                buyPotion(player);
+            }
+            break;
     }
+}
+
+void PotionsMerchant::buyPotion(Player &player) {
+    amountPurchased += 1;
+    player.setCoins(player.getCoins() - HEALTH_POTIONS_PRICE);
+    player.setHealthPoints((int) player.getHealthPoints() + HEALTH_POTIONS_HP);
 }
 
 void PotionsMerchant::resetAmountPurchased() {

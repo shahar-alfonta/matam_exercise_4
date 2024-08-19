@@ -21,7 +21,6 @@ protected:
     string name;
     Character character;
     FightRange fightRange;
-    bool isMagic;
     unsigned int level = 1;
     unsigned int force = 5;
     unsigned int currentHP = 100;
@@ -49,7 +48,7 @@ public:
 
     FightRange getFightRange() const;
 
-    bool getIsMagic() const;
+    virtual bool isMagic() const;
 
     /**
      * Gets the current level of the player
@@ -98,6 +97,7 @@ class Warrior : public Player {
 
 public:
     Warrior(string name, string characterType);
+
     unsigned int combatPower() const override;
 
     string getJob() const override;
@@ -116,4 +116,6 @@ public:
     Magician(string name, string characterType);
 
     string getJob() const override;
+
+    bool isMagic() const override;
 };

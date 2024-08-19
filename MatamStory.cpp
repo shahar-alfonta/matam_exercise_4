@@ -44,8 +44,7 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream) 
     while (!eventsStream.eof()) {
         getline(eventsStream, line);
         std::istringstream wordStream(line);
-        shared_ptr<Event> a = eventFactory(wordStream);
-        events.push_back(a);
+        events.push_back(eventFactory(wordStream));
     }
 
     while (!playersStream.eof()) {
@@ -98,8 +97,8 @@ bool MatamStory::isGameOver() const {
     return true;
 }
 
-int MatamStory::eventIndex() {
-    return (m_turnIndex - 1) % events.size();
+unsigned int MatamStory::eventIndex() {
+    return (m_turnIndex - 1) % (unsigned int) events.size();
 }
 
 void MatamStory::play() {

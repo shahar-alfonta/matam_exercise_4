@@ -40,7 +40,7 @@ private:
     */
     bool isGameOver() const;
 
-    int eventIndex();
+    unsigned int eventIndex();
 
 public:
     /**

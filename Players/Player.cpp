@@ -19,8 +19,10 @@ string Player::getDescription() const {
     switch (getCharacter()) {
         case RESPONSIBLE:
             characterStr = "Responsible";
+            break;
         case RISK_TAKING:
             characterStr = "RiskTaking";
+            break;
     }
 
     string description =
@@ -42,8 +44,8 @@ FightRange Player::getFightRange() const {
     return fightRange;
 }
 
-bool Player::getIsMagic() const {
-    return isMagic;
+bool Player::isMagic() const {
+    return false;
 }
 
 unsigned int Player::getLevel() const {
@@ -75,17 +77,20 @@ void Player::setCoins(unsigned int newCoins) {
 }
 
 void Player::setHealthPoints(int hp) {
-    if (hp <= 0){
+    if (hp < 0) {
         currentHP = 0;
-    }
-    if (hp < (int) maxHP && hp > 0) {
+    } else if (hp < maxHP) {
         currentHP = hp;
+    } else {
+        currentHP = maxHP;
     }
 }
 
 void Player::setForce(int newForce) {
     if (newForce >= 0) {
         force = newForce;
+    } else {
+        force = 0;
     }
 }
 
@@ -119,4 +124,8 @@ Magician::Magician(string name, string characterType) : Player(name, characterTy
 
 string Magician::getJob() const {
     return "Magician";
+}
+
+bool Magician::isMagic() const {
+    return true;
 }

@@ -64,7 +64,7 @@ void MonsterPack::postFightChanges() {
 
 string MonsterPack::getEntityTypeMessage() const {
     ostringstream oss;
-    oss << "Pack of " << members.size() << "members";
+    oss << "Pack of " << members.size() << " members";
     return oss.str();
 }
 
