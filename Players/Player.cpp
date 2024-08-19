@@ -75,6 +75,9 @@ void Player::setCoins(unsigned int newCoins) {
 }
 
 void Player::setHealthPoints(int hp) {
+    if (hp <= 0){
+        currentHP = 0;
+    }
     if (hp < (int) maxHP && hp > 0) {
         currentHP = hp;
     }
@@ -94,13 +97,18 @@ void Player::levelUp() {
     level++;
 }
 
-Warrior::Warrior(string name, string characterType) : Player(name, characterType) {}
+Warrior::Warrior(string name, string characterType) : Player(name, characterType) {
+    this->maxHP = 150;
+    this->currentHP = 150;
+}
 
 string Warrior::getJob() const {
     return "Warrior";
 }
 
-Archer::Archer(string name, string characterType) : Player(name, characterType) {}
+Archer::Archer(string name, string characterType) : Player(name, characterType) {
+    coins = 20;
+}
 
 string Archer::getJob() const {
     return "Archer";

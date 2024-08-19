@@ -63,10 +63,6 @@ public:
 
 
 class Snail : public Monster {
-protected:
-    int combatPower = 5;
-    int loot = 2;
-    int damage = 10;
 public:
     Snail(std::istringstream &wordStream);
 
@@ -74,10 +70,6 @@ public:
 };
 
 class Slime : public Monster {
-protected:
-    int combatPower = 12;
-    int loot = 5;
-    int damage = 25;
 public:
     Slime(std::istringstream &wordStream);
 
@@ -85,10 +77,6 @@ public:
 };
 
 class Balrog : public Monster {
-protected:
-    int combatPower = 15;
-    int loot = 100;
-    int damage = 9001;
 public:
     Balrog(std::istringstream &wordStream);
 
@@ -97,10 +85,11 @@ public:
     void postFightChanges() override;
 };
 
+std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream, std::string &firstWord);
+
 typedef std::shared_ptr<FightEntity> (*EntitiesFactoryFunction)(std::istringstream &);
 
 extern std::unordered_map<std::string, EntitiesFactoryFunction> entitiesFactoryMap;
 
-std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream);
 
 #endif //HW4_FIGHTENTITY_H
