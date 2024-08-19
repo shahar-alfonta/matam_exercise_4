@@ -1,8 +1,6 @@
 
 #include "Event.h"
-#include <iostream>
 #include "../Utilities.h"
-#include "iostream"
 
 #define CLOSE_RANGE_DEFAULT_DAMAGE 10
 
@@ -52,7 +50,7 @@ void SolarEclipse::apply(Player &player) {
 }
 
 int SolarEclipse::effect(Player &player) const {
-    if (player.getIsMagic()) {
+    if (player.isMagic()) {
         return 1;
     } else {
         return -1;
@@ -105,7 +103,6 @@ std::shared_ptr<Event> eventFactory(std::istringstream &wordStream) {
     if (shared_ptr<FightEntity> entity = fightEntityFactory(wordStream, word)) {
         return make_shared<Encounter>(entity);
     }
-    std::cout <<"here" <<endl;
 
     throw Invalid_File("Invalid Events File");
 }

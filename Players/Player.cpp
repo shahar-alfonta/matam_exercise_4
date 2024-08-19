@@ -44,8 +44,8 @@ FightRange Player::getFightRange() const {
     return fightRange;
 }
 
-bool Player::getIsMagic() const {
-    return isMagic;
+bool Player::isMagic() const {
+    return false;
 }
 
 unsigned int Player::getLevel() const {
@@ -124,4 +124,8 @@ Magician::Magician(string name, string characterType) : Player(name, characterTy
 
 string Magician::getJob() const {
     return "Magician";
+}
+
+bool Magician::isMagic() const {
+    return true;
 }
