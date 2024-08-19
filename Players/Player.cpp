@@ -79,7 +79,7 @@ void Player::setCoins(unsigned int newCoins) {
 void Player::setHealthPoints(int hp) {
     if (hp < 0) {
         currentHP = 0;
-    } else if (hp < maxHP) {
+    } else if (hp < (int) maxHP) {
         currentHP = hp;
     } else {
         currentHP = maxHP;
