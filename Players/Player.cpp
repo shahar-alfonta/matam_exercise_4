@@ -103,8 +103,9 @@ void Player::levelUp() {
 }
 
 Warrior::Warrior(string name, string characterType) : Player(name, characterType) {
-    this->maxHP = 150;
-    this->currentHP = 150;
+    fightRange = CLOSE;
+    maxHP = 150;
+    currentHP = 150;
 }
 
 string Warrior::getJob() const {
@@ -112,6 +113,7 @@ string Warrior::getJob() const {
 }
 
 Archer::Archer(string name, string characterType) : Player(name, characterType) {
+    fightRange = FAR;
     coins = 20;
 }
 
@@ -119,7 +121,9 @@ string Archer::getJob() const {
     return "Archer";
 }
 
-Magician::Magician(string name, string characterType) : Player(name, characterType) {}
+Magician::Magician(string name, string characterType) : Player(name, characterType) {
+    fightRange = FAR;
+}
 
 
 string Magician::getJob() const {
