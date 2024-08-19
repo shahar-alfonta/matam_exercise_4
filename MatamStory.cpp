@@ -44,7 +44,8 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream) 
     while (!eventsStream.eof()) {
         getline(eventsStream, line);
         std::istringstream wordStream(line);
-        events.push_back(eventFactory(wordStream));
+        shared_ptr<Event> a = eventFactory(wordStream); // TODO: oh no
+        events.push_back(a);
     }
 
     while (!playersStream.eof()) {
@@ -79,7 +80,7 @@ void MatamStory::playRound() {
     vector<shared_ptr<Player>> leaderboard = players;
     sort(leaderboard.begin(), leaderboard.end(), comp);
     for (unsigned int i = 0; i < leaderboard.size(); ++i) {
-        printLeaderBoardEntry(i, *leaderboard[i]);
+        printLeaderBoardEntry(i+1, *leaderboard[i]);
     }
 
     printBarrier();
@@ -94,17 +95,17 @@ bool MatamStory::isGameOver() const {
             return false;
         }
     }
-    return false;
+    return true;
 }
 
 unsigned int MatamStory::eventIndex() {
-    return m_turnIndex % (unsigned int) events.size();
+    return (m_turnIndex - 1) % (unsigned int) events.size();
 }
 
 void MatamStory::play() {
     printStartMessage();
     for (unsigned int i = 0; i < players.size(); ++i) {
-        printStartPlayerEntry(i, *players[i]);
+        printStartPlayerEntry(i+1, *players[i]);
     }
     printBarrier();
 
@@ -113,7 +114,7 @@ void MatamStory::play() {
     }
 
     printGameOver();
-    vector<shared_ptr<Player>> leaderboard;
+    vector<shared_ptr<Player>> leaderboard = players;
     sort(leaderboard.begin(), leaderboard.end(), comp);
     if (leaderboard.front()->getLevel() == 10) {
         printWinner(*leaderboard.front());

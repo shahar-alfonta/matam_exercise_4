@@ -1,6 +1,6 @@
 
 #include "Event.h"
-
+#include <iostream>
 #include "../Utilities.h"
 #include "iostream"
 
@@ -95,13 +95,12 @@ void PotionsMerchant::resetAmountPurchased() {
 std::shared_ptr<Event> eventFactory(std::istringstream &wordStream) {
     string word;
     wordStream >> word;
-
     auto it = specialEventsFactoryMap.find(word);
     if (it != specialEventsFactoryMap.end()) {
         return it->second();
     }
 
-    if (shared_ptr<FightEntity> entity = fightEntityFactory(wordStream)) {
+    if (shared_ptr<FightEntity> entity = fightEntityFactory(wordStream, word)) {
         return make_shared<Encounter>(entity);
     }
     std::cout <<"here" <<endl;

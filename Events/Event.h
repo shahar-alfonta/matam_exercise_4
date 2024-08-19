@@ -75,7 +75,7 @@ public:
 
 std::shared_ptr<Event> eventFactory(std::istringstream &wordStream);
 
-std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream);
+std::shared_ptr<FightEntity> fightEntityFactory(std::istringstream &wordStream, std::string &firstWord);
 
 typedef std::shared_ptr<Event> (*SpecialEventsFactoryFunction)();
 
