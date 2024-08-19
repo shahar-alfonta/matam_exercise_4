@@ -95,7 +95,7 @@ public:
 };
 
 class Warrior : public Player {
-    int maxHP = 150;
+    unsigned int maxHP = 150;
 
 public:
     Warrior(string name, string characterType);

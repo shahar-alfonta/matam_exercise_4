@@ -10,6 +10,8 @@
 
 #define SOLAR_ECLIPSE "SolarEclipse"
 #define POTIONS_MERCHANT "PotionsMerchant"
+#define HEALTH_POTIONS_HP 10
+#define HEALTH_POTIONS_PRICE 5
 
 class Event {
 public:
@@ -56,8 +58,7 @@ public:
 
 class PotionsMerchant : public Event {
 private:
-    int amountPurchased = 0;
-
+    unsigned int amountPurchased = 0;
 public:
     PotionsMerchant() = default;
 
@@ -66,6 +67,8 @@ public:
     string getOutCome(Player &player) const override;
 
     void apply(Player &player) override;
+
+    void buyPotion(Player& player);
 
     void resetAmountPurchased();
 };

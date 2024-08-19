@@ -97,8 +97,8 @@ bool MatamStory::isGameOver() const {
     return false;
 }
 
-int MatamStory::eventIndex() {
-    return m_turnIndex % events.size();
+unsigned int MatamStory::eventIndex() {
+    return m_turnIndex % (unsigned int) events.size();
 }
 
 void MatamStory::play() {
