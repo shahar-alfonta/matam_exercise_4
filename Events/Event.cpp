@@ -74,11 +74,13 @@ void PotionsMerchant::apply(Player &player) {
             if (player.getHealthPoints() < 50 && player.getCoins() >= HEALTH_POTIONS_PRICE) {
                 buyPotion(player);
             }
+            break;
         case RESPONSIBLE:
             while (player.getHealthPoints() <= player.getMaxHealthPoints() &&
                    player.getCoins() >= HEALTH_POTIONS_PRICE) {
                 buyPotion(player);
             }
+            break;
     }
 }
 

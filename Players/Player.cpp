@@ -19,8 +19,10 @@ string Player::getDescription() const {
     switch (getCharacter()) {
         case RESPONSIBLE:
             characterStr = "Responsible";
+            break;
         case RISK_TAKING:
             characterStr = "RiskTaking";
+            break;
     }
 
     string description =
