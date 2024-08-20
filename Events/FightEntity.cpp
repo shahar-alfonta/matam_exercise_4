@@ -29,7 +29,7 @@ MonsterPack::MonsterPack(istringstream &wordStream) {
         members.push_back(fightEntityFactory(wordStream, firstWord));
         memberCount++;
     }
-    if (members.size() < 2 || size != members.size()){
+    if (members.size() < 2 || size != (int) members.size()) {
         throw Invalid_File("Invalid Events File");
     }
 }
@@ -86,7 +86,7 @@ int Monster::getDamage() const {
 Snail::Snail(istringstream &wordStream) {
     combatPower = 5;
     loot = 2;
-    damage= 10;
+    damage = 10;
 }
 
 string Snail::getEntityTypeMessage() const {
@@ -94,9 +94,9 @@ string Snail::getEntityTypeMessage() const {
 }
 
 Slime::Slime(istringstream &wordStream) {
-     combatPower = 12;
-     loot = 5;
-     damage = 25;
+    combatPower = 12;
+    loot = 5;
+    damage = 25;
 }
 
 string Slime::getEntityTypeMessage() const {
@@ -104,9 +104,9 @@ string Slime::getEntityTypeMessage() const {
 }
 
 Balrog::Balrog(istringstream &wordStream) {
-     combatPower = 15;
-     loot = 100;
-     damage = 9001;
+    combatPower = 15;
+    loot = 100;
+    damage = 9001;
 }
 
 string Balrog::getEntityTypeMessage() const {
@@ -119,7 +119,7 @@ void Balrog::postFightChanges() {
 
 std::shared_ptr<FightEntity> fightEntityFactory(istringstream &wordStream, string &firstWord) {
 
-    if (firstWord == "SolarEclipse" || firstWord == "PotionsMerchant"){
+    if (firstWord == "SolarEclipse" || firstWord == "PotionsMerchant") {
         throw Invalid_File("Invalid Events File");
     }
 
