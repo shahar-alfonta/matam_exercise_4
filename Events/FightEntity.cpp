@@ -29,6 +29,9 @@ MonsterPack::MonsterPack(istringstream &wordStream) {
         members.push_back(fightEntityFactory(wordStream, firstWord));
         memberCount++;
     }
+    if (members.size() < 2 || size != members.size()){
+        throw Invalid_File("Invalid Events File");
+    }
 }
 
 int MonsterPack::getCombatPower() const {
@@ -115,6 +118,10 @@ void Balrog::postFightChanges() {
 }
 
 std::shared_ptr<FightEntity> fightEntityFactory(istringstream &wordStream, string &firstWord) {
+
+    if (firstWord == "SolarEclipse" || firstWord == "PotionsMerchant"){
+        throw Invalid_File("Invalid Events File");
+    }
 
     auto it = entitiesFactoryMap.find(firstWord);
     if (it != entitiesFactoryMap.end()) {

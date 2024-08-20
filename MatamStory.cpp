@@ -52,6 +52,9 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream) 
         std::istringstream wordStream(line);
         players.push_back(playerFactory(wordStream));
     }
+    if (players.size() < 2 || players.size() > 5){
+        throw Invalid_File("Invalid Players File");
+    }
     this->m_turnIndex = 1;
 }
 
